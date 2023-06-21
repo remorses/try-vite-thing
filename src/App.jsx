@@ -1,4 +1,5 @@
 import { Link, Route, Routes } from 'react-router-dom'
+import WorkingExample from 'xxx'
 import MegaMenu from 'https://framer.com/m/Mega-Menu-2wT3.js'
 
 // Auto generates routes from files under ./pages
@@ -18,6 +19,7 @@ export function App() {
     return (
         <>
             <MegaMenu />
+            <WorkingExample />
             <nav>
                 <ul>
                     {routes.map(({ name, path }) => {
