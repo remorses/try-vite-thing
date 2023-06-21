@@ -1,4 +1,4 @@
-Imports starting with `https://` cannot be externalized
+Imports starting with `https://` cannot be resolved by plugins during SSR
 
 Reproduction
 
