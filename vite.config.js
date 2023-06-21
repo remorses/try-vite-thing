@@ -24,7 +24,7 @@ export function viteHttpfilePlugin() {
             }
             config.ssr.noExternal.push(/https/)
         },
-        async load(source, { ssr }) {
+        async load(source) {
             console.log('http load', source)
             if (source.startsWith('framer.com')) {
                 source = 'https://' + source
