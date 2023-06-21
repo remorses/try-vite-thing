@@ -9,7 +9,7 @@ const isTest = process.env.VITEST
 
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
 
-
+import { viteHttpfilePlugin } from './vite.config.js'
 
 export async function createServer(
     root = process.cwd(),
@@ -37,7 +37,7 @@ export async function createServer(
                 noExternal: [/https/],
             },
             logLevel: isTest ? 'error' : 'info',
-            plugins: [],
+            plugins: [viteHttpfilePlugin()],
             server: {
                 middlewareMode: true,
                 watch: {
@@ -108,4 +108,3 @@ if (!isTest) {
         }),
     )
 }
-
