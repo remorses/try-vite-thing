@@ -39,7 +39,12 @@ export function viteHttpfilePlugin() {
             if (!config.ssr.noExternal) {
                 config.ssr.noExternal = []
             }
-            config.ssr.noExternal!.push(/^https:\/\//)
+            let regex = /^https:\/\/.*/
+            if (Array.isArray(config.ssr.noExternal)) {
+                config.ssr.noExternal!.push(regex)
+            } else if (typeof config.ssr.noExternal === 'string') {
+                config.ssr.noExternal = [config.ssr.noExternal, regex]
+            }
             // config.ssr.noExternal.push(new RegExp(`https`))
             config.define ??= {}
             // config.define['process.env.NODE_ENV'] = JSON.stringify('dev')
@@ -82,7 +87,7 @@ export function viteHttpfilePlugin() {
                     return realFile
                 } catch (e) {
                     console.error('http resolve error', e)
-                    // throw e
+                    throw e
                 }
             }
 
