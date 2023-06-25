@@ -1,35 +1,18 @@
-import { defineConfig, transformWithEsbuild } from 'vite'
-import fs from 'fs'
-import path from 'path'
 import MagicString from 'magic-string'
+import { fetch } from 'native-fetch'
+import fs from 'fs'
 
-import react from '@vitejs/plugin-react'
-import { PluginOption } from 'vite'
+import path from 'path'
+import { PluginOption, transformWithEsbuild } from 'vite/dist/node'
 
-export default defineConfig({
-    plugins: [viteHttpfilePlugin(), react()],
-    build: {
-        minify: false,
-    },
-    esbuild: {
-        define: {
-            'process.env.NODE_ENV': JSON.stringify('dev'),
-        },
-    },
-})
-
-// const prefix = `/urlImport:`
-
-export function viteHttpfilePlugin() {
+export function viteHttpsImportsPlugin() {
     const cwd = process.cwd()
     const folderName = 'httpfiles'
     const folderPath = path.resolve(cwd, folderName)
     let resolved = new Map<string, Promise<any>>()
-    /**
-     * @type {import('vite').PluginOption}
-     */
+
     const p: PluginOption = {
-        name: 'vite-plugin-httpfile', // required, will show up in warnings and errors
+        name: 'vite-plugin-https-imports', // required, will show up in warnings and errors
         // enforce: 'pre',
 
         config(config, { command }) {
@@ -242,42 +225,6 @@ export async function resolveRedirect(url) {
         return resolveRedirect(res.headers.get('location'))
     }
     return url
-}
-
-export function exampleWorkingPlugin() {
-    /**
-     * @type {import('vite').PluginOption}
-     */
-
-    const p = {
-        name: 'xxx',
-        // enforce: 'pre',
-        config(config, { command }) {
-            if (!config.ssr) {
-                config.ssr = {}
-            }
-            if (!config.ssr.noExternal) {
-                config.ssr.noExternal = []
-            }
-            config.ssr.noExternal.push('xxx')
-        },
-        async load(source, { ssr }) {
-            console.log('load', source)
-            if (source !== 'xxx') {
-                return null
-            }
-
-            return { code: `export default () => null` }
-        },
-
-        resolveId(source, importer, options) {
-            console.log('resolve', source)
-            if (source === 'xxx') {
-                return { id: source, external: false, moduleSideEffects: false }
-            }
-        },
-    }
-    return p
 }
 
 function addExtension(p) {

@@ -1,0 +1,4 @@
+packages:
+  - package
+  - vite-plugin-https-imports
+  - example-app-ssr

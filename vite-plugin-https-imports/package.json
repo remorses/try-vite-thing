@@ -1,0 +1,29 @@
+{
+    "name": "vite-plugin-https-imports",
+    "version": "0.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "types": "dist/index.d.ts",
+    "repository": "https://github.com/remorses/",
+    "scripts": {
+        "build": "tsc && tsc -m es6 --outDir esm",
+        "watch": "tsc -w"
+    },
+    "files": [
+        "dist",
+        "src",
+        "esm"
+    ],
+    "keywords": [],
+    "author": "Tommaso De Rossi, morse <beats.by.morse@gmail.com>",
+    "license": "",
+    "dependencies": {
+        "magic-string": "^0.30.0",
+        "native-fetch": "^4.0.2",
+        "undici": "^5.22.1"
+    },
+    "peerDependencies": {
+        "vite": "*"
+    }
+}

@@ -7,17 +7,16 @@ import express from 'express'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-console.log(' i am server')
 const isTest = process.env.VITEST
 
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
 
-import { exampleWorkingPlugin, viteHttpfilePlugin } from './vite.config'
+import { viteHttpsImportsPlugin } from 'vite-plugin-https-imports/src/index'
 
 export async function createServer(
     root = process.cwd(),
     isProd = process.env.NODE_ENV === 'production',
-    hmrPort,
+    hmrPort=undefined,
 ) {
     const resolve = (p) => path.resolve(__dirname, p)
 
@@ -25,7 +24,7 @@ export async function createServer(
         ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
         : ''
 
-    const app = express()
+    const app = express() as any
 
     /**
      * @type {import('vite').ViteDevServer}
