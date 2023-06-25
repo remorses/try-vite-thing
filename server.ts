@@ -1,15 +1,18 @@
 import fs from 'node:fs'
+import Inspect from 'vite-plugin-inspect'
+
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
+console.log(' i am server')
 const isTest = process.env.VITEST
 
 process.env.MY_CUSTOM_SECRET = 'API_KEY_qwertyuiop'
 
-import { exampleWorkingPlugin, viteHttpfilePlugin } from './vite.config.js'
+import { exampleWorkingPlugin, viteHttpfilePlugin } from './vite.config'
 
 export async function createServer(
     root = process.cwd(),
@@ -34,7 +37,7 @@ export async function createServer(
         ).createServer({
             root,
             logLevel: isTest ? 'error' : 'info',
-            plugins: [viteHttpfilePlugin(), exampleWorkingPlugin()],
+            plugins: [Inspect(), viteHttpfilePlugin()],
             server: {
                 middlewareMode: true,
                 watch: {
@@ -45,6 +48,11 @@ export async function createServer(
                 },
                 hmr: {
                     port: hmrPort,
+                },
+            },
+            esbuild: {
+                define: {
+                    'process.env.NODE_ENV': JSON.stringify('dev'),
                 },
             },
             appType: 'custom',
