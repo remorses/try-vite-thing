@@ -71,7 +71,7 @@ export function viteHttpfilePlugin() {
                     const res = await fetch(realUrl)
                     if (!res.ok) {
                         throw new Error(
-                            `http resolve not ok for ${url} ${res.status} imported by '${importer}'`,
+                            `http resolve not ok for ${url} ${res.status} imported by '${id}'`,
                         )
                     }
                     const text = await res.text()
